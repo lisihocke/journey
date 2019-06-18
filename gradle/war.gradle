@@ -1,7 +1,7 @@
 apply plugin: "war"
 
 bootWar {
-    mainClassName = "com.lisihocke.JourneyApp"
+    mainClassName = "com.lisihocke.journey.JourneyApp"
     includes = ["WEB-INF/**", "META-INF/**"]
 }
 

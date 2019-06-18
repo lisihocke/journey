@@ -98,7 +98,7 @@ version = "0.0.1-SNAPSHOT"
 description = ""
 
 springBoot {
-    mainClassName = "com.lisihocke.JourneyApp"
+    mainClassName = "com.lisihocke.journey.JourneyApp"
 }
 
 test {

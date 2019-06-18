@@ -8,8 +8,8 @@ openApiGenerate {
     generatorName = "spring"
     inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
     outputDir = "$buildDir/openapi".toString()
-    apiPackage = "com.lisihocke.web.api"
-    modelPackage = "com.lisihocke.web.api.model"
+    apiPackage = "com.lisihocke.journey.web.api"
+    modelPackage = "com.lisihocke.journey.web.api.model"
     apiFilesConstrainedTo = [""]
     modelFilesConstrainedTo = [""]
     supportingFilesConstrainedTo = ["ApiUtil.java"]
