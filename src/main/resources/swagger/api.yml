@@ -2,13 +2,16 @@
 # This file will be used at compile time to generate Spring-MVC endpoint stubs using openapi-generator
 openapi: '3.0.1'
 info:
-  title: 'journey'
+  title: 'Journey'
   version: 0.0.1
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
   - url: http://localhost:8080
-    description: Developpement server
+    description: Development server
   - url: https://localhost:8080
-    description: Developpement server with TLS Profile
+    description: Development server with TLS Profile
 paths: {}
 
 components:

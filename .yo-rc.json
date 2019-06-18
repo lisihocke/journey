@@ -1,13 +1,13 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.lisihocke"
+      "packageName": "com.lisihocke.journey"
     },
     "jhipsterVersion": "6.1.0",
     "applicationType": "monolith",
     "baseName": "journey",
-    "packageName": "com.lisihocke",
-    "packageFolder": "com/lisihocke",
+    "packageName": "com.lisihocke.journey",
+    "packageFolder": "com/lisihocke/journey",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",

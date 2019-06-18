@@ -1,9 +1,9 @@
 {
   "name": "journey",
-  "version": "0.0.0",
-  "description": "Description for journey",
+  "version": "0.0.1",
+  "description": "A learning journal",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "Apache License 2.0",
   "cacheDirectories": [
     "node_modules"
   ],
