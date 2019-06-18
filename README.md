@@ -1,4 +1,18 @@
-# journey
+# Journey
+
+## A minimalistic learning journal
+
+Take notes along your journey as a reminder of the progress made and the lessons learned on your way.
+
+## #CodeConfident
+
+This repository is the proof of concept for [my journey of becoming #CodeConfident](https://www.lisihocke.com/p/codeconfident.html).
+
+## Scope
+
+The scope for this practice project is to implement a small product from scratch. It should provide basic functionality and serve as proof of concept that my skills evolved and my confidence to tackle these kind of coding challenges increased.
+
+# JHipster
 
 This application was generated using JHipster 6.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.1.0](https://www.jhipster.tech/documentation-archive/v6.1.0).
 
