@@ -135,7 +135,7 @@
                                  referencedTableName="jhi_persistent_audit_event"/>
     </changeSet>
 
-    <changeSet author="jhipster" id="00000000000002" context="test">
+    <changeSet author="jhipster" id="00000000000002">
         <createTable tableName="jhi_date_time_wrapper">
             <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="jhi_date_time_wrapperPK"/>
