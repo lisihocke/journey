@@ -1,6 +1,6 @@
 # Journey
 
-## A minimalistic learning journal
+## A learning journal
 
 Take notes along your journey as a reminder of the progress made and the lessons learned on your way.
 
@@ -11,6 +11,12 @@ This repository is the proof of concept for [my journey of becoming #CodeConfide
 ## Scope
 
 The scope for this practice project is to implement a small product from scratch. It should provide basic functionality and serve as proof of concept that my skills evolved and my confidence to tackle these kind of coding challenges increased.
+
+## Quickstart guide to run the app
+
+    docker-compose -f src/main/docker/mysql.yml up
+    ./gradlew
+    npm start
 
 # JHipster
 
