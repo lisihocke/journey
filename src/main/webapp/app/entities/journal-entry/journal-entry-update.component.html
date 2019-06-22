@@ -4,10 +4,10 @@
             <h2 id="jhi-journal-entry-heading">Create or edit a Journal Entry</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
+                <div class="form-group">
+                    <label class="form-control-label" for="field_date">Date</label>
+                    <input type="date" class="form-control" name="date" id="field_date"
+                    formControlName="dateInput"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_title">Title</label>
@@ -26,8 +26,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           formControlName="description"/>
+                    <textarea type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description" rows="10"></textarea>
                     <div *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('description').errors.maxlength">

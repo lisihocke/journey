@@ -15,6 +15,7 @@ export class JournalEntryUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    date: [null, []],
     title: [null, [Validators.required, Validators.maxLength(255)]],
     description: [null, [Validators.maxLength(8000)]]
   });
