@@ -89,6 +89,9 @@ public class JournalEntryQueryService extends QueryService<JournalEntry> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), JournalEntry_.id));
             }
+            if (criteria.getDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDate(), JournalEntry_.date));
+            }
             if (criteria.getTitle() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTitle(), JournalEntry_.title));
             }

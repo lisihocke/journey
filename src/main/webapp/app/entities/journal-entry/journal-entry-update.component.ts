@@ -12,10 +12,11 @@ import { JournalEntryService } from './journal-entry.service';
 })
 export class JournalEntryUpdateComponent implements OnInit {
   isSaving: boolean;
+  dateDp: any;
 
   editForm = this.fb.group({
     id: [],
-    date: [null, []],
+    date: [null, [Validators.required]],
     title: [null, [Validators.required, Validators.maxLength(255)]],
     description: [null, [Validators.maxLength(8000)]]
   });
@@ -32,6 +33,7 @@ export class JournalEntryUpdateComponent implements OnInit {
   updateForm(journalEntry: IJournalEntry) {
     this.editForm.patchValue({
       id: journalEntry.id,
+      date: journalEntry.date,
       title: journalEntry.title,
       description: journalEntry.description
     });
@@ -55,6 +57,7 @@ export class JournalEntryUpdateComponent implements OnInit {
     const entity = {
       ...new JournalEntry(),
       id: this.editForm.get(['id']).value,
+      date: this.editForm.get(['date']).value,
       title: this.editForm.get(['title']).value,
       description: this.editForm.get(['description']).value
     };

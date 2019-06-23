@@ -10,6 +10,7 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+import io.github.jhipster.service.filter.LocalDateFilter;
 
 /**
  * Criteria class for the {@link com.lisihocke.journey.domain.JournalEntry} entity. This class is used
@@ -26,6 +27,8 @@ public class JournalEntryCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
+    private LocalDateFilter date;
+
     private StringFilter title;
 
     private StringFilter description;
@@ -35,6 +38,7 @@ public class JournalEntryCriteria implements Serializable, Criteria {
 
     public JournalEntryCriteria(JournalEntryCriteria other){
         this.id = other.id == null ? null : other.id.copy();
+        this.date = other.date == null ? null : other.date.copy();
         this.title = other.title == null ? null : other.title.copy();
         this.description = other.description == null ? null : other.description.copy();
     }
@@ -50,6 +54,14 @@ public class JournalEntryCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public LocalDateFilter getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateFilter date) {
+        this.date = date;
     }
 
     public StringFilter getTitle() {
@@ -80,25 +92,28 @@ public class JournalEntryCriteria implements Serializable, Criteria {
         final JournalEntryCriteria that = (JournalEntryCriteria) o;
         return
             Objects.equals(id, that.id) &&
-            Objects.equals(title, that.title) &&
-            Objects.equals(description, that.description);
+                Objects.equals(date, that.date) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-        id,
-        title,
-        description
+            id,
+            date,
+            title,
+            description
         );
     }
 
     @Override
     public String toString() {
         return "JournalEntryCriteria{" +
-                (id != null ? "id=" + id + ", " : "") +
-                (title != null ? "title=" + title + ", " : "") +
-                (description != null ? "description=" + description + ", " : "") +
+            (id != null ? "id=" + id + ", " : "") +
+            (date != null ? "date=" + date + ", " : "") +
+            (title != null ? "title=" + title + ", " : "") +
+            (description != null ? "description=" + description + ", " : "") +
             "}";
     }
 

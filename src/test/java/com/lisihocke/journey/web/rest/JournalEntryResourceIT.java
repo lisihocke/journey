@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.lisihocke.journey.web.rest.TestUtil.createFormattingConversionService;
@@ -37,6 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest(classes = JourneyApp.class)
 public class JournalEntryResourceIT {
+
+    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
@@ -95,6 +100,7 @@ public class JournalEntryResourceIT {
      */
     public static JournalEntry createEntity(EntityManager em) {
         JournalEntry journalEntry = new JournalEntry()
+            .date(DEFAULT_DATE)
             .title(DEFAULT_TITLE)
             .description(DEFAULT_DESCRIPTION);
         return journalEntry;
@@ -107,6 +113,7 @@ public class JournalEntryResourceIT {
      */
     public static JournalEntry createUpdatedEntity(EntityManager em) {
         JournalEntry journalEntry = new JournalEntry()
+            .date(UPDATED_DATE)
             .title(UPDATED_TITLE)
             .description(UPDATED_DESCRIPTION);
         return journalEntry;
@@ -133,6 +140,7 @@ public class JournalEntryResourceIT {
         List<JournalEntry> journalEntryList = journalEntryRepository.findAll();
         assertThat(journalEntryList).hasSize(databaseSizeBeforeCreate + 1);
         JournalEntry testJournalEntry = journalEntryList.get(journalEntryList.size() - 1);
+        assertThat(testJournalEntry.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testJournalEntry.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testJournalEntry.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
@@ -157,6 +165,24 @@ public class JournalEntryResourceIT {
         assertThat(journalEntryList).hasSize(databaseSizeBeforeCreate);
     }
 
+    @Test
+    @Transactional
+    public void checkDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = journalEntryRepository.findAll().size();
+        // set the field null
+        journalEntry.setDate(null);
+
+        // Create the JournalEntry, which fails.
+        JournalEntryDTO journalEntryDTO = journalEntryMapper.toDto(journalEntry);
+
+        restJournalEntryMockMvc.perform(post("/api/journal-entries")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(journalEntryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<JournalEntry> journalEntryList = journalEntryRepository.findAll();
+        assertThat(journalEntryList).hasSize(databaseSizeBeforeTest);
+    }
 
     @Test
     @Transactional
@@ -188,6 +214,7 @@ public class JournalEntryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(journalEntry.getId().intValue())))
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
@@ -203,8 +230,74 @@ public class JournalEntryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(journalEntry.getId().intValue()))
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where date equals to DEFAULT_DATE
+        defaultJournalEntryShouldBeFound("date.equals=" + DEFAULT_DATE);
+
+        // Get all the journalEntryList where date equals to UPDATED_DATE
+        defaultJournalEntryShouldNotBeFound("date.equals=" + UPDATED_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where date in DEFAULT_DATE or UPDATED_DATE
+        defaultJournalEntryShouldBeFound("date.in=" + DEFAULT_DATE + "," + UPDATED_DATE);
+
+        // Get all the journalEntryList where date equals to UPDATED_DATE
+        defaultJournalEntryShouldNotBeFound("date.in=" + UPDATED_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where date is not null
+        defaultJournalEntryShouldBeFound("date.specified=true");
+
+        // Get all the journalEntryList where date is null
+        defaultJournalEntryShouldNotBeFound("date.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByDateIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where date greater than or equals to DEFAULT_DATE
+        defaultJournalEntryShouldBeFound("date.greaterOrEqualThan=" + DEFAULT_DATE);
+
+        // Get all the journalEntryList where date greater than or equals to UPDATED_DATE
+        defaultJournalEntryShouldNotBeFound("date.greaterOrEqualThan=" + UPDATED_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByDateIsLessThanSomething() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where date less than or equals to DEFAULT_DATE
+        defaultJournalEntryShouldNotBeFound("date.lessThan=" + DEFAULT_DATE);
+
+        // Get all the journalEntryList where date less than or equals to UPDATED_DATE
+        defaultJournalEntryShouldBeFound("date.lessThan=" + UPDATED_DATE);
     }
 
     @Test
@@ -292,6 +385,7 @@ public class JournalEntryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(journalEntry.getId().intValue())))
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
 
@@ -341,6 +435,7 @@ public class JournalEntryResourceIT {
         // Disconnect from session so that the updates on updatedJournalEntry are not directly saved in db
         em.detach(updatedJournalEntry);
         updatedJournalEntry
+            .date(UPDATED_DATE)
             .title(UPDATED_TITLE)
             .description(UPDATED_DESCRIPTION);
         JournalEntryDTO journalEntryDTO = journalEntryMapper.toDto(updatedJournalEntry);
@@ -354,6 +449,7 @@ public class JournalEntryResourceIT {
         List<JournalEntry> journalEntryList = journalEntryRepository.findAll();
         assertThat(journalEntryList).hasSize(databaseSizeBeforeUpdate);
         JournalEntry testJournalEntry = journalEntryList.get(journalEntryList.size() - 1);
+        assertThat(testJournalEntry.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testJournalEntry.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testJournalEntry.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
@@ -401,13 +497,13 @@ public class JournalEntryResourceIT {
         TestUtil.equalsVerifier(JournalEntry.class);
         JournalEntry journalEntry1 = new JournalEntry();
         journalEntry1.setId(1L);
-        JournalEntry journalEntry2 = new JournalEntry();
-        journalEntry2.setId(journalEntry1.getId());
-        assertThat(journalEntry1).isEqualTo(journalEntry2);
-        journalEntry2.setId(2L);
-        assertThat(journalEntry1).isNotEqualTo(journalEntry2);
+        JournalEntry journalEntry = new JournalEntry();
+        journalEntry.setId(journalEntry1.getId());
+        assertThat(journalEntry1).isEqualTo(journalEntry);
+        journalEntry.setId(2L);
+        assertThat(journalEntry1).isNotEqualTo(journalEntry);
         journalEntry1.setId(null);
-        assertThat(journalEntry1).isNotEqualTo(journalEntry2);
+        assertThat(journalEntry1).isNotEqualTo(journalEntry);
     }
 
     @Test

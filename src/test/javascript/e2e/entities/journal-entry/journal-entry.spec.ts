@@ -39,7 +39,12 @@ describe('JournalEntry e2e test', () => {
     const nbButtonsBeforeCreate = await journalEntryComponentsPage.countDeleteButtons();
 
     await journalEntryComponentsPage.clickOnCreateButton();
-    await promise.all([journalEntryUpdatePage.setTitleInput('title'), journalEntryUpdatePage.setDescriptionInput('description')]);
+    await promise.all([
+      journalEntryUpdatePage.setDateInput('2000-12-31'),
+      journalEntryUpdatePage.setTitleInput('title'),
+      journalEntryUpdatePage.setDescriptionInput('description')
+    ]);
+    expect(await journalEntryUpdatePage.getDateInput()).to.eq('2000-12-31', 'Expected date value to be equals to 2000-12-31');
     expect(await journalEntryUpdatePage.getTitleInput()).to.eq('title', 'Expected Title value to be equals to title');
     expect(await journalEntryUpdatePage.getDescriptionInput()).to.eq(
       'description',

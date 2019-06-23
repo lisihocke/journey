@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A JournalEntry.
@@ -20,6 +21,10 @@ public class JournalEntry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     @NotNull
     @Size(max = 255)
@@ -37,6 +42,19 @@ public class JournalEntry implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public JournalEntry date(LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getTitle() {
@@ -86,6 +104,7 @@ public class JournalEntry implements Serializable {
     public String toString() {
         return "JournalEntry{" +
             "id=" + getId() +
+            ", date='" + getDate() + "'" +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
             "}";

@@ -17,7 +17,7 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span>Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="title"><span>Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let journalEntry of journalEntries ;trackBy: trackId">
-                <td><a [routerLink]="['/journal-entry', journalEntry.id, 'view' ]">{{journalEntry.id}}</a></td>
+                <td><a [routerLink]="['/journal-entry', journalEntry.id, 'view' ]">{{journalEntry.date | date:'mediumDate'}}</a></td>
                 <td>{{journalEntry.title}}</td>
                 <td>{{journalEntry.description}}</td>
                 <td class="text-right">

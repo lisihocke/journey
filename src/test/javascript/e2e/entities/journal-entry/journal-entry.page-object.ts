@@ -26,8 +26,17 @@ export class JournalEntryUpdatePage {
   pageTitle = element(by.id('jhi-journal-entry-heading'));
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
+  dateInput = element(by.id('field_date'));
   titleInput = element(by.id('field_title'));
   descriptionInput = element(by.id('field_description'));
+
+  async setDateInput(date) {
+    await this.dateInput.sendKeys(date);
+  }
+
+  async getDateInput() {
+    return await this.dateInput.getAttribute('value');
+  }
 
   async getPageTitle() {
     return this.pageTitle.getText();
