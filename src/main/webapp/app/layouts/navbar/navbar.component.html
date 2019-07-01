@@ -16,25 +16,13 @@
                     </span>
                 </a>
             </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="journal-entry" (click)="collapseNavbar()">
                     <span>
-                        <fa-icon icon="th-list"></fa-icon>
-                        <span>
-                            Entities
-                        </span>
+                        <fa-icon icon="calendar-alt"></fa-icon>
+                        <span>Journal</span>
                     </span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="journal-entry" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Journal Entry</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">

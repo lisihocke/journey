@@ -4,14 +4,14 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-journal-entry" [routerLink]="['/journal-entry/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new Journal Entry
+            Create new journal entry
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="journalEntries?.length === 0">
-        <span>No journalEntries found</span>
+        <span>No journal entries found</span>
     </div>
     <div class="table-responsive" *ngIf="journalEntries?.length > 0">
         <table class="table table-striped">
@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let journalEntry of journalEntries ;trackBy: trackId">
-                <td><a [routerLink]="['/journal-entry', journalEntry.id, 'view' ]">{{journalEntry.date | date:'mediumDate'}}</a></td>
+                <td><a [routerLink]="['/journal-entry', journalEntry.id, 'view' ]">{{journalEntry.date | date:'longDate'}}</a></td>
                 <td>{{journalEntry.title}}</td>
                 <td>{{journalEntry.description}}</td>
                 <td class="text-right">
