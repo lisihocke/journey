@@ -1,9 +1,12 @@
 package com.lisihocke.journey.service;
 
-import java.util.List;
-
-import javax.persistence.criteria.JoinType;
-
+import com.lisihocke.journey.domain.JournalEntry;
+import com.lisihocke.journey.domain.JournalEntry_;
+import com.lisihocke.journey.repository.JournalEntryRepository;
+import com.lisihocke.journey.service.dto.JournalEntryCriteria;
+import com.lisihocke.journey.service.dto.JournalEntryDTO;
+import com.lisihocke.journey.service.mapper.JournalEntryMapper;
+import io.github.jhipster.service.QueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,14 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.github.jhipster.service.QueryService;
-
-import com.lisihocke.journey.domain.JournalEntry;
-import com.lisihocke.journey.domain.*; // for static metamodels
-import com.lisihocke.journey.repository.JournalEntryRepository;
-import com.lisihocke.journey.service.dto.JournalEntryCriteria;
-import com.lisihocke.journey.service.dto.JournalEntryDTO;
-import com.lisihocke.journey.service.mapper.JournalEntryMapper;
+import java.util.List;
 
 /**
  * Service for executing complex queries for {@link JournalEntry} entities in the database.

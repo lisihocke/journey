@@ -17,6 +17,5 @@
     <include file="config/liquibase/changelog/20190620155230_added_entity_JournalEntry.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190622223305_added_field_JournalEntry.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190622224600_added_constraint.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20190703012200_added_entity_Challenge.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
