@@ -20,7 +20,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="description" type="text(8000)">
+            <column name="description" type="clob">
                 <constraints nullable="true" />
             </column>
 

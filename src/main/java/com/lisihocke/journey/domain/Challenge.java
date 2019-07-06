@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -36,35 +37,35 @@ public class Challenge implements Serializable {
     private String tag;
 
     @NotNull
-    @Size(max = 3000)
-    @Column(name = "challenge_description", length = 3000, columnDefinition = "text")
+    @Lob
+    @Column(name = "challenge_description")
     private String challengeDescription;
 
     @NotNull
-    @Size(max = 1000)
-    @Column(name = "hypothesis", length = 1000, columnDefinition = "text")
+    @Lob
+    @Column(name = "hypothesis")
     private String hypothesis;
 
     @NotNull
-    @Size(max = 5000)
-    @Column(name = "probe", length = 5000, columnDefinition = "text")
+    @Lob
+    @Column(name = "probe")
     private String probe;
 
-    @Size(max = 3000)
-    @Column(name = "pause_criteria", length = 3000, columnDefinition = "text")
+    @Lob
+    @Column(name = "pause_criteria")
     private String pauseCriteria;
 
     @NotNull
-    @Size(max = 3000)
-    @Column(name = "exit_criteria", length = 3000, columnDefinition = "text")
+    @Lob
+    @Column(name = "exit_criteria")
     private String exitCriteria;
 
-    @Size(max = 8000)
-    @Column(name = "influences", length = 8000, columnDefinition = "text")
+    @Lob
+    @Column(name = "influences")
     private String influences;
 
-    @Size(max = 8000)
-    @Column(name = "notes", length = 8000, columnDefinition = "text")
+    @Lob
+    @Column(name = "notes")
     private String notes;
 
     @OneToMany(mappedBy = "challenge")

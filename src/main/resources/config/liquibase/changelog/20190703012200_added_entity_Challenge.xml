@@ -19,25 +19,25 @@
             <column name="tag" type="varchar(100)">
                 <constraints nullable="false" />
             </column>
-            <column name="challenge_description" type="text(3000)">
+            <column name="challenge_description" type="clob">
                 <constraints nullable="false" />
             </column>
-            <column name="hypothesis" type="text(1000)">
+            <column name="hypothesis" type="clob">
                 <constraints nullable="false" />
             </column>
-            <column name="probe" type="text(5000)">
+            <column name="probe" type="clob">
                 <constraints nullable="false" />
             </column>
-            <column name="pause_criteria" type="text(3000)">
+            <column name="pause_criteria" type="clob">
                 <constraints nullable="true" />
             </column>
-            <column name="exit_criteria" type="text(3000)">
+            <column name="exit_criteria" type="clob">
                 <constraints nullable="false" />
             </column>
-            <column name="influences" type="text(8000)">
+            <column name="influences" type="clob">
                 <constraints nullable="true" />
             </column>
-            <column name="notes" type="text(8000)">
+            <column name="notes" type="clob">
                 <constraints nullable="true" />
             </column>
         </createTable>
