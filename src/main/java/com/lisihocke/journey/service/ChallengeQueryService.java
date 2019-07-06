@@ -2,6 +2,7 @@ package com.lisihocke.journey.service;
 
 import com.lisihocke.journey.domain.Challenge;
 import com.lisihocke.journey.domain.Challenge_;
+import com.lisihocke.journey.domain.JournalEntry_;
 import com.lisihocke.journey.repository.ChallengeRepository;
 import com.lisihocke.journey.service.dto.ChallengeCriteria;
 import com.lisihocke.journey.service.dto.ChallengeDTO;
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.JoinType;
 import java.util.List;
 
 /**
@@ -87,6 +89,10 @@ public class ChallengeQueryService extends QueryService<Challenge> {
             }
             if (criteria.getTag() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTag(), Challenge_.tag));
+            }
+            if (criteria.getJournalEntryId() != null) {
+                specification = specification.and(buildSpecification(criteria.getJournalEntryId(),
+                    root -> root.join(Challenge_.journalEntries, JoinType.LEFT).get(JournalEntry_.id)));
             }
         }
         return specification;

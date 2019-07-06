@@ -1,5 +1,7 @@
 package com.lisihocke.journey.service.dto;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -20,6 +22,9 @@ public class JournalEntryDTO implements Serializable {
 
     @Size(max = 8000)
     private String description;
+
+    @NotNull
+    private Long challengeId;
 
 
     public Long getId() {
@@ -54,6 +59,14 @@ public class JournalEntryDTO implements Serializable {
         this.description = description;
     }
 
+    public Long getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(Long challengeId) {
+        this.challengeId = challengeId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,6 +95,7 @@ public class JournalEntryDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
+            ", challengeId='" + getChallengeId() + "'" +
             "}";
     }
 }

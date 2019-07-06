@@ -1,16 +1,13 @@
 package com.lisihocke.journey.service.dto;
 
-import java.io.Serializable;
-import java.util.Objects;
 import io.github.jhipster.service.Criteria;
-import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
+import io.github.jhipster.service.filter.LocalDateFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
-import io.github.jhipster.service.filter.LocalDateFilter;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Criteria class for the {@link com.lisihocke.journey.domain.JournalEntry} entity. This class is used
@@ -33,6 +30,8 @@ public class JournalEntryCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
+    private LongFilter challengeId;
+
     public JournalEntryCriteria(){
     }
 
@@ -41,6 +40,7 @@ public class JournalEntryCriteria implements Serializable, Criteria {
         this.date = other.date == null ? null : other.date.copy();
         this.title = other.title == null ? null : other.title.copy();
         this.description = other.description == null ? null : other.description.copy();
+        this.challengeId = other.challengeId == null ? null : other.challengeId.copy();
     }
 
     @Override
@@ -80,6 +80,13 @@ public class JournalEntryCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
+    public LongFilter getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(LongFilter challengeId) {
+        this.challengeId = challengeId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -94,7 +101,8 @@ public class JournalEntryCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(title, that.title) &&
-                Objects.equals(description, that.description);
+                Objects.equals(description, that.description) &&
+                Objects.equals(challengeId, that.challengeId);
     }
 
     @Override
@@ -103,7 +111,8 @@ public class JournalEntryCriteria implements Serializable, Criteria {
             id,
             date,
             title,
-            description
+            description,
+            challengeId
         );
     }
 
@@ -114,6 +123,7 @@ public class JournalEntryCriteria implements Serializable, Criteria {
             (date != null ? "date=" + date + ", " : "") +
             (title != null ? "title=" + title + ", " : "") +
             (description != null ? "description=" + description + ", " : "") +
+            (challengeId != null ? "challengeId=" + challengeId + ", " : "") +
             "}";
     }
 

@@ -9,7 +9,7 @@
     <property name="autoIncrement" value="true"/>
 
     <!--
-        Added column date to table journal_entry.
+        Added constraint to field date to table journal_entry.
     -->
     <changeSet id="20190622224600-1" author="lisihocke">
         <addNotNullConstraint tableName="journal_entry" columnName="date" columnDataType="date" defaultNullValue="2000-12-31"/>

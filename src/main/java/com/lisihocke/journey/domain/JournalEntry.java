@@ -1,4 +1,5 @@
 package com.lisihocke.journey.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -35,7 +36,11 @@ public class JournalEntry implements Serializable {
     @Column(name = "description", length = 8000)
     private String description;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    @ManyToOne
+    @JsonIgnoreProperties("journalEntries")
+    @JoinColumn(name = "challenge_id", nullable = false)
+    private Challenge challenge;
+
     public Long getId() {
         return id;
     }
@@ -82,7 +87,14 @@ public class JournalEntry implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -107,6 +119,7 @@ public class JournalEntry implements Serializable {
             ", date='" + getDate() + "'" +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
+            ", challengeId='" + getChallenge().getId() + "'" +
             "}";
     }
 }

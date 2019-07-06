@@ -8,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Challenge.
@@ -29,7 +32,7 @@ public class Challenge implements Serializable {
 
     @NotNull
     @Size(max = 100)
-    @Column(name = "tag", length = 100)
+    @Column(name = "tag", length = 100, unique = true)
     private String tag;
 
     @NotNull
@@ -63,6 +66,10 @@ public class Challenge implements Serializable {
     @Size(max = 8000)
     @Column(name = "notes", length = 8000)
     private String notes;
+
+    @OneToMany(mappedBy = "challenge")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<JournalEntry> journalEntries = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -174,6 +181,31 @@ public class Challenge implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Set<JournalEntry> getJournalEntries() {
+        return journalEntries;
+    }
+
+    public Challenge journalEntries(Set<JournalEntry> journalEntries) {
+        this.journalEntries = journalEntries;
+        return this;
+    }
+
+    public Challenge addJournalEntry(JournalEntry journalEntry) {
+        this.journalEntries.add(journalEntry);
+        journalEntry.setChallenge(this);
+        return this;
+    }
+
+    public Challenge removeJournalEntry(JournalEntry journalEntry) {
+        this.journalEntries.remove(journalEntry);
+        journalEntry.setChallenge(null);
+        return this;
+    }
+
+    public void setJournalEntries(Set<JournalEntry> journalEntries) {
+        this.journalEntries = journalEntries;
     }
 
     @Override

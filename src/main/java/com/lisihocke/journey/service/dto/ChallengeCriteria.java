@@ -25,12 +25,15 @@ public class ChallengeCriteria implements Serializable, Criteria {
 
     private StringFilter tag;
 
+    private LongFilter journalEntryId;
+
     public ChallengeCriteria(){
     }
 
     public ChallengeCriteria(ChallengeCriteria other){
         this.id = other.id == null ? null : other.id.copy();
         this.tag = other.tag == null ? null : other.tag.copy();
+        this.journalEntryId = other.journalEntryId == null ? null : other.journalEntryId.copy();
     }
 
     @Override
@@ -54,6 +57,14 @@ public class ChallengeCriteria implements Serializable, Criteria {
         this.tag = tag;
     }
 
+    public LongFilter getJournalEntryId() {
+        return journalEntryId;
+    }
+
+    public void setJournalEntryId(LongFilter journalEntryId) {
+        this.journalEntryId = journalEntryId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -65,14 +76,16 @@ public class ChallengeCriteria implements Serializable, Criteria {
         final ChallengeCriteria that = (ChallengeCriteria) o;
         return
             Objects.equals(id, that.id) &&
-                Objects.equals(tag, that.tag);
+            Objects.equals(tag, that.tag) &&
+            Objects.equals(journalEntryId, that.journalEntryId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
             id,
-            tag
+            tag,
+            journalEntryId
         );
     }
 
@@ -81,6 +94,7 @@ public class ChallengeCriteria implements Serializable, Criteria {
         return "JournalEntryCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (tag != null ? "tag=" + tag + ", " : "") +
+            (journalEntryId != null ? "journalEntryId=" + journalEntryId + ", " : "") +
             "}";
     }
 

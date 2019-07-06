@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="autoIncrement" value="true"/>
+
+    <!--
+        Added column challenge_id to table journal_entry.
+    -->
+    <changeSet id="20190706164200-1" author="lisihocke">
+        <addColumn tableName="journal_entry">
+            <column name="challenge_id" type="bigint"></column>
+        </addColumn>
+        <addNotNullConstraint tableName="journal_entry" columnName="challenge_id" columnDataType="bigint" defaultNullValue="1"/>
+        <addForeignKeyConstraint baseColumnNames="challenge_id"
+                                 baseTableName="journal_entry"
+                                 constraintName="fk_journal_entry_challenge"
+                                 referencedTableName="challenge"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

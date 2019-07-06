@@ -1,5 +1,6 @@
 package com.lisihocke.journey.service;
 
+import com.lisihocke.journey.domain.Challenge_;
 import com.lisihocke.journey.domain.JournalEntry;
 import com.lisihocke.journey.domain.JournalEntry_;
 import com.lisihocke.journey.repository.JournalEntryRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.JoinType;
 import java.util.List;
 
 /**
@@ -93,6 +95,10 @@ public class JournalEntryQueryService extends QueryService<JournalEntry> {
             }
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), JournalEntry_.description));
+            }
+            if (criteria.getChallengeId() != null) {
+                specification = specification.and(buildSpecification(criteria.getChallengeId(),
+                    root -> root.join(JournalEntry_.challenge, JoinType.LEFT).get(Challenge_.id)));
             }
         }
         return specification;

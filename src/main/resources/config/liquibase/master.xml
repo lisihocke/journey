@@ -18,4 +18,5 @@
     <include file="config/liquibase/changelog/20190622223305_added_field_JournalEntry.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190622224600_added_constraint.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190703012200_added_entity_Challenge.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190706164200_added_field_JournalEntry.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
