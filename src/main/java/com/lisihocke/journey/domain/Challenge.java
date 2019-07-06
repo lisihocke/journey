@@ -37,34 +37,34 @@ public class Challenge implements Serializable {
 
     @NotNull
     @Size(max = 3000)
-    @Column(name = "challenge_description", length = 3000)
+    @Column(name = "challenge_description", length = 3000, columnDefinition = "text")
     private String challengeDescription;
 
     @NotNull
     @Size(max = 1000)
-    @Column(name = "hypothesis", length = 1000)
+    @Column(name = "hypothesis", length = 1000, columnDefinition = "text")
     private String hypothesis;
 
     @NotNull
     @Size(max = 5000)
-    @Column(name = "probe", length = 5000)
+    @Column(name = "probe", length = 5000, columnDefinition = "text")
     private String probe;
 
     @Size(max = 3000)
-    @Column(name = "pause_criteria", length = 3000)
+    @Column(name = "pause_criteria", length = 3000, columnDefinition = "text")
     private String pauseCriteria;
 
     @NotNull
     @Size(max = 3000)
-    @Column(name = "exit_criteria", length = 3000)
+    @Column(name = "exit_criteria", length = 3000, columnDefinition = "text")
     private String exitCriteria;
 
     @Size(max = 8000)
-    @Column(name = "influences", length = 8000)
+    @Column(name = "influences", length = 8000, columnDefinition = "text")
     private String influences;
 
     @Size(max = 8000)
-    @Column(name = "notes", length = 8000)
+    @Column(name = "notes", length = 8000, columnDefinition = "text")
     private String notes;
 
     @OneToMany(mappedBy = "challenge")

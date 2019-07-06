@@ -33,9 +33,10 @@ public class JournalEntry implements Serializable {
     private String title;
 
     @Size(max = 8000)
-    @Column(name = "description", length = 8000)
+    @Column(name = "description", length = 8000, columnDefinition = "text")
     private String description;
 
+    @NotNull
     @ManyToOne
     @JsonIgnoreProperties("journalEntries")
     @JoinColumn(name = "challenge_id", nullable = false)
