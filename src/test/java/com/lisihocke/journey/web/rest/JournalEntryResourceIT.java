@@ -1,19 +1,19 @@
 package com.lisihocke.journey.web.rest;
 
 import com.lisihocke.journey.JourneyApp;
+import com.lisihocke.journey.domain.Challenge;
 import com.lisihocke.journey.domain.JournalEntry;
 import com.lisihocke.journey.repository.JournalEntryRepository;
+import com.lisihocke.journey.service.JournalEntryQueryService;
 import com.lisihocke.journey.service.JournalEntryService;
 import com.lisihocke.journey.service.dto.JournalEntryDTO;
 import com.lisihocke.journey.service.mapper.JournalEntryMapper;
 import com.lisihocke.journey.web.rest.errors.ExceptionTranslator;
-import com.lisihocke.journey.service.dto.JournalEntryCriteria;
-import com.lisihocke.journey.service.JournalEntryQueryService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
@@ -31,23 +31,29 @@ import java.util.List;
 import static com.lisihocke.journey.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Integration tests for the {@Link JournalEntryResource} REST controller.
  */
 @SpringBootTest(classes = JourneyApp.class)
+@AutoConfigureMockMvc
 public class JournalEntryResourceIT {
 
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
-    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "defaultTitle";
+    private static final String UPDATED_TITLE = "updatedTitle";
 
-    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+    private static final String DEFAULT_DESCRIPTION = "defaultDescription";
+    private static final String UPDATED_DESCRIPTION = "updatedDescription";
 
     @Autowired
     private JournalEntryRepository journalEntryRepository;
@@ -80,6 +86,10 @@ public class JournalEntryResourceIT {
 
     private JournalEntry journalEntry;
 
+    private static Challenge defaultChallenge;
+
+    private static Challenge updatedChallenge;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -99,28 +109,26 @@ public class JournalEntryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static JournalEntry createEntity(EntityManager em) {
+        defaultChallenge = ChallengeResourceIT.createEntity(em);
+        em.persist(defaultChallenge);
+        em.flush();
+
         JournalEntry journalEntry = new JournalEntry()
             .date(DEFAULT_DATE)
             .title(DEFAULT_TITLE)
             .description(DEFAULT_DESCRIPTION);
-        return journalEntry;
-    }
-    /**
-     * Create an updated entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static JournalEntry createUpdatedEntity(EntityManager em) {
-        JournalEntry journalEntry = new JournalEntry()
-            .date(UPDATED_DATE)
-            .title(UPDATED_TITLE)
-            .description(UPDATED_DESCRIPTION);
+
+        journalEntry.setChallenge(defaultChallenge);
+
         return journalEntry;
     }
 
     @BeforeEach
     public void initTest() {
+        updatedChallenge = ChallengeResourceIT.createEntity(em);
+        em.persist(updatedChallenge);
+        em.flush();
+
         journalEntry = createEntity(em);
     }
 
@@ -143,6 +151,7 @@ public class JournalEntryResourceIT {
         assertThat(testJournalEntry.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testJournalEntry.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testJournalEntry.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testJournalEntry.getChallenge().getId()).isEqualTo(defaultChallenge.getId());
     }
 
     @Test
@@ -205,6 +214,25 @@ public class JournalEntryResourceIT {
 
     @Test
     @Transactional
+    public void checkChallengeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = journalEntryRepository.findAll().size();
+        // set the field null
+        journalEntry.setChallenge(null);
+
+        // Create the JournalEntry, which fails.
+        JournalEntryDTO journalEntryDTO = journalEntryMapper.toDto(journalEntry);
+
+        restJournalEntryMockMvc.perform(post("/api/journal-entries")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(journalEntryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<JournalEntry> journalEntryList = journalEntryRepository.findAll();
+        assertThat(journalEntryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllJournalEntries() throws Exception {
         // Initialize the database
         journalEntryRepository.saveAndFlush(journalEntry);
@@ -215,8 +243,9 @@ public class JournalEntryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(journalEntry.getId().intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].challengeId").value(hasItem(defaultChallenge.getId().intValue())));
     }
     
     @Test
@@ -231,8 +260,9 @@ public class JournalEntryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(journalEntry.getId().intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.challengeId").value(defaultChallenge.getId().intValue()));
     }
 
     @Test
@@ -377,6 +407,46 @@ public class JournalEntryResourceIT {
         // Get all the journalEntryList where description is null
         defaultJournalEntryShouldNotBeFound("description.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByChallengeIdIsEqualToSomething() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where challengeId equals to defaultChallenge
+            defaultJournalEntryShouldBeFound("challengeId.equals=" + defaultChallenge.getId());
+
+        // Get all the journalEntryList where challengeId equals to updatedChallenge
+        defaultJournalEntryShouldNotBeFound("challengeId.equals=" + updatedChallenge.getId());
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByChallengeIdIsInShouldWork() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where challengeId in defaultChallenge or updatedChallenge
+        defaultJournalEntryShouldBeFound("challengeId.in=" + defaultChallenge.getId() + "," + updatedChallenge.getId());
+
+        // Get all the journalEntryList where challengeId equals to updatedChallenge
+        defaultJournalEntryShouldNotBeFound("challengeId.in=" + updatedChallenge.getId());
+    }
+
+    @Test
+    @Transactional
+    public void getAllJournalEntriesByChallengeIdIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        journalEntryRepository.saveAndFlush(journalEntry);
+
+        // Get all the journalEntryList where challengeId is not null
+        defaultJournalEntryShouldBeFound("challengeId.specified=true");
+
+        // Get all the journalEntryList where challengeId is null
+        defaultJournalEntryShouldNotBeFound("challengeId.specified=false");
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -387,7 +457,8 @@ public class JournalEntryResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(journalEntry.getId().intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].challengeId").value(hasItem(defaultChallenge.getId().intValue())));
 
         // Check, that the count call also returns 1
         restJournalEntryMockMvc.perform(get("/api/journal-entries/count?sort=id,desc&" + filter))
@@ -437,7 +508,8 @@ public class JournalEntryResourceIT {
         updatedJournalEntry
             .date(UPDATED_DATE)
             .title(UPDATED_TITLE)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .setChallenge(updatedChallenge);
         JournalEntryDTO journalEntryDTO = journalEntryMapper.toDto(updatedJournalEntry);
 
         restJournalEntryMockMvc.perform(put("/api/journal-entries")
@@ -452,6 +524,7 @@ public class JournalEntryResourceIT {
         assertThat(testJournalEntry.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testJournalEntry.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testJournalEntry.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testJournalEntry.getChallenge()).isEqualTo(updatedChallenge);
     }
 
     @Test
