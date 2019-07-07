@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -46,9 +45,8 @@ public class JournalEntry implements Serializable {
     private String description;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JsonIgnoreProperties("journalEntries")
-    @JoinColumn(name = "challenge_id", nullable = false)
     private Challenge challenge;
 
     public Long getId() {
@@ -129,7 +127,7 @@ public class JournalEntry implements Serializable {
             ", date='" + getDate() + "'" +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
-            ", challengeId='" + getChallenge().getId() + "'" +
+            ", challenge='" + getChallenge() + "'" +
             "}";
     }
 }

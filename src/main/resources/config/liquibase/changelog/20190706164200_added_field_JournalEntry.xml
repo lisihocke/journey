@@ -13,12 +13,13 @@
     -->
     <changeSet id="20190706164200-1" author="lisihocke">
         <addColumn tableName="journal_entry">
-            <column name="challenge_id" type="bigint"></column>
+            <column name="challenge_id" type="bigint" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
         </addColumn>
-        <addNotNullConstraint tableName="journal_entry" columnName="challenge_id" columnDataType="bigint" defaultNullValue="1"/>
         <addForeignKeyConstraint baseColumnNames="challenge_id"
                                  baseTableName="journal_entry"
-                                 constraintName="fk_journal_entry_challenge"
+                                 constraintName="fk_journal_entry_challenge_id"
                                  referencedTableName="challenge"
                                  referencedColumnNames="id"/>
     </changeSet>
