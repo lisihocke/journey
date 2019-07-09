@@ -1,22 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
-
-import { IJournalEntry } from 'app/shared/model/journal-entry.model';
 import { AccountService } from 'app/core';
-
 import { ITEMS_PER_PAGE } from 'app/shared';
-import { JournalEntryService } from './journal-entry.service';
+import { IChallenge } from 'app/shared/model/challenge.model';
+import { JhiAlertService, JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
+import { ChallengeService } from './challenge.service';
 
 @Component({
-  selector: 'jhi-journal-entry',
-  templateUrl: './journal-entry.component.html'
+  selector: 'jhi-challenge',
+  templateUrl: './challenge.component.html'
 })
-export class JournalEntryComponent implements OnInit, OnDestroy {
+export class ChallengeComponent implements OnInit, OnDestroy {
   currentAccount: any;
-  journalEntries: IJournalEntry[];
+  challenges: IChallenge[];
   error: any;
   success: any;
   eventSubscriber: Subscription;
@@ -30,7 +28,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy {
   reverse: any;
 
   constructor(
-    protected journalEntryService: JournalEntryService,
+    protected challengeService: ChallengeService,
     protected parseLinks: JhiParseLinks,
     protected jhiAlertService: JhiAlertService,
     protected accountService: AccountService,
@@ -48,14 +46,14 @@ export class JournalEntryComponent implements OnInit, OnDestroy {
   }
 
   loadAll() {
-    this.journalEntryService
+    this.challengeService
       .query({
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort()
       })
       .subscribe(
-        (res: HttpResponse<IJournalEntry[]>) => this.paginateJournalEntries(res.body, res.headers),
+        (res: HttpResponse<IChallenge[]>) => this.paginateChallenges(res.body, res.headers),
         (res: HttpErrorResponse) => this.onError(res.message)
       );
   }
@@ -68,7 +66,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy {
   }
 
   transition() {
-    this.router.navigate(['/journal-entry'], {
+    this.router.navigate(['/challenge'], {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
@@ -81,7 +79,7 @@ export class JournalEntryComponent implements OnInit, OnDestroy {
   clear() {
     this.page = 0;
     this.router.navigate([
-      '/journal-entry',
+      '/challenge',
       {
         page: this.page,
         sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
@@ -95,19 +93,19 @@ export class JournalEntryComponent implements OnInit, OnDestroy {
     this.accountService.identity().then(account => {
       this.currentAccount = account;
     });
-    this.registerChangeInJournalEntries();
+    this.registerChangeInChallenges();
   }
 
   ngOnDestroy() {
     this.eventManager.destroy(this.eventSubscriber);
   }
 
-  trackId(index: number, item: IJournalEntry) {
+  trackId(index: number, item: IChallenge) {
     return item.id;
   }
 
-  registerChangeInJournalEntries() {
-    this.eventSubscriber = this.eventManager.subscribe('journalEntryListModification', response => this.loadAll());
+  registerChangeInChallenges() {
+    this.eventSubscriber = this.eventManager.subscribe('challengeListModification', response => this.loadAll());
   }
 
   sort() {
@@ -118,10 +116,10 @@ export class JournalEntryComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected paginateJournalEntries(data: IJournalEntry[], headers: HttpHeaders) {
+  protected paginateChallenges(data: IChallenge[], headers: HttpHeaders) {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    this.journalEntries = data;
+    this.challenges = data;
   }
 
   protected onError(errorMessage: string) {

@@ -7,8 +7,11 @@ import { RouterModule } from '@angular/router';
       {
         path: 'journal-entry',
         loadChildren: './journal-entry/journal-entry.module#JourneyJournalEntryModule'
+      },
+      {
+        path: 'challenge',
+        loadChildren: './challenge/challenge.module#JourneyChallengeModule'
       }
-      /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
   ],
   declarations: [],

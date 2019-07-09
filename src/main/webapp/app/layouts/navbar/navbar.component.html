@@ -17,6 +17,14 @@
                 </a>
             </li>
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="challenge" (click)="collapseNavbar()">
+                    <span>
+                        <fa-icon icon="tasks"></fa-icon>
+                        <span>Challenges</span>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="journal-entry" (click)="collapseNavbar()">
                     <span>
                         <fa-icon icon="calendar-alt"></fa-icon>

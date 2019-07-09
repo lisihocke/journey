@@ -17,6 +17,12 @@
                 <dd>
                     <span>{{journalEntry.description}}</span>
                 </dd>
+                <dt><span>Challenge</span></dt>
+                <dd>
+                    <div *ngIf="journalEntry.challengeId">
+                        <a [routerLink]="['/challenge', journalEntry.challengeId, 'view']">{{journalEntry.challengeId}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

@@ -1,55 +1,45 @@
 <div>
     <h2 id="page-heading">
-        <span>Journal Entries</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-journal-entry" [routerLink]="['/journal-entry/new']">
+        <span>Challenges</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-challenge" [routerLink]="['/challenge/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new journal entry
+            Create new challenge
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="alert alert-warning" *ngIf="journalEntries?.length === 0">
-        <span>No journal entries found</span>
+    <div class="alert alert-warning" *ngIf="challenges?.length === 0">
+        <span>No challenges found</span>
     </div>
-    <div class="table-responsive" *ngIf="journalEntries?.length > 0">
+    <div class="table-responsive" *ngIf="challenges?.length > 0">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="date"><span>Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="title"><span>Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="challenge"><span>Challenge</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="tag"><span>Tag</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let journalEntry of journalEntries ;trackBy: trackId">
-                <td><a [routerLink]="['/journal-entry', journalEntry.id, 'view' ]">{{journalEntry.date | date:'longDate'}}</a></td>
-                <td>{{journalEntry.title}}</td>
-                <td>{{journalEntry.description}}</td>
-                <td>
-                    <div *ngIf="journalEntry.challengeId">
-                        <a [routerLink]="['../challenge', journalEntry.challengeId , 'view' ]" >{{journalEntry.challengeId}}</a>
-                    </div>
-                </td>
+            <tr *ngFor="let challenge of challenges ;trackBy: trackId">
+                <td><a [routerLink]="['/challenge', challenge.id, 'view' ]">{{challenge.tag}}</a></td>               
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
-                                [routerLink]="['/journal-entry', journalEntry.id, 'view' ]"
+                                [routerLink]="['/challenge', challenge.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/journal-entry', journalEntry.id, 'edit']"
+                                [routerLink]="['/challenge', challenge.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'journal-entry', { outlets: { popup: journalEntry.id + '/delete'} }]"
+                                [routerLink]="['/', 'challenge', { outlets: { popup: challenge.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
@@ -62,7 +52,7 @@
             </tbody>
         </table>
     </div>
-    <div [hidden]="journalEntries?.length === 0">
+    <div [hidden]="challenges?.length === 0">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
