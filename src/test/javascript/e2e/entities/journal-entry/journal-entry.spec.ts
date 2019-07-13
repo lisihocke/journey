@@ -1,7 +1,6 @@
 /* tslint:disable no-unused-expression */
 import { browser, ExpectedConditions as ec, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
-
 import { JournalEntryComponentsPage, JournalEntryDeleteDialog, JournalEntryUpdatePage } from './journal-entry.page-object';
 
 const expect = chai.expect;
@@ -18,7 +17,7 @@ describe('JournalEntry e2e test', () => {
     navBarPage = new NavBarPage();
     signInPage = await navBarPage.getSignInPage();
     await signInPage.autoSignInUsing('admin', 'admin');
-    await browser.wait(ec.visibilityOf(navBarPage.entityMenu), 5000);
+    await browser.wait(ec.visibilityOf(navBarPage.accountMenu), 5000);
   });
 
   it('should load JournalEntries', async () => {
@@ -42,7 +41,8 @@ describe('JournalEntry e2e test', () => {
     await promise.all([
       journalEntryUpdatePage.setDateInput('2000-12-31'),
       journalEntryUpdatePage.setTitleInput('title'),
-      journalEntryUpdatePage.setDescriptionInput('description')
+      journalEntryUpdatePage.setDescriptionInput('description'),
+      journalEntryUpdatePage.setChallengeInput('1: 1')
     ]);
     expect(await journalEntryUpdatePage.getDateInput()).to.eq('2000-12-31', 'Expected date value to be equals to 2000-12-31');
     expect(await journalEntryUpdatePage.getTitleInput()).to.eq('title', 'Expected Title value to be equals to title');
@@ -50,6 +50,7 @@ describe('JournalEntry e2e test', () => {
       'description',
       'Expected Description value to be equals to description'
     );
+    expect(await journalEntryUpdatePage.getChallengeInput()).to.eq('1: 1', 'Expected Challenge value to be equals to 1: 1');
     await journalEntryUpdatePage.save();
     expect(await journalEntryUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions, element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class JournalEntryComponentsPage {
   createButton = element(by.id('jh-create-entity'));
@@ -29,6 +29,7 @@ export class JournalEntryUpdatePage {
   dateInput = element(by.id('field_date'));
   titleInput = element(by.id('field_title'));
   descriptionInput = element(by.id('field_description'));
+  challengeInput = element(by.id('field_challenge'));
 
   async setDateInput(date) {
     await this.dateInput.sendKeys(date);
@@ -56,6 +57,15 @@ export class JournalEntryUpdatePage {
 
   async getDescriptionInput() {
     return await this.descriptionInput.getAttribute('value');
+  }
+
+  async setChallengeInput(challengeId) {
+    await this.challengeInput.click;
+    await element(by.css('option[value="' + challengeId + '"]')).click();
+  }
+
+  async getChallengeInput() {
+    return await this.challengeInput.getAttribute('value');
   }
 
   async save(timeout?: number) {

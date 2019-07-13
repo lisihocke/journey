@@ -1,7 +1,6 @@
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class NavBarPage {
-  entityMenu = element(by.id('entity-menu'));
   accountMenu = element(by.id('account-menu'));
   adminMenu: ElementFinder;
   signIn = element(by.id('login'));
@@ -14,10 +13,6 @@ export class NavBarPage {
     if (asAdmin) {
       this.adminMenu = element(by.id('admin-menu'));
     }
-  }
-
-  async clickOnEntityMenu() {
-    await this.entityMenu.click();
   }
 
   async clickOnAccountMenu() {
@@ -74,7 +69,6 @@ export class NavBarPage {
   }
 
   async goToEntity(entityName: string) {
-    await this.clickOnEntityMenu();
     await this.clickOnEntity(entityName);
   }
 
