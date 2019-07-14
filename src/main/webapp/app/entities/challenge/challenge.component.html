@@ -18,12 +18,14 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="tag"><span>Tag</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="hypothesis"><span>Hypothesis</span></th> 
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let challenge of challenges ;trackBy: trackId">
-                <td><a [routerLink]="['/challenge', challenge.id, 'view' ]">{{challenge.tag}}</a></td>               
+                <td><a [routerLink]="['/challenge', challenge.id, 'view' ]">{{challenge.tag}}</a></td>
+                <td>{{challenge.hypothesis}}</td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

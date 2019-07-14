@@ -1,18 +1,10 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="journalEntry">
-            <h2><span>Journal Entry</span> {{journalEntry.id}}</h2>
+            <h2><span>Journal Entry: </span>{{journalEntry.date | date:'longDate'}} - {{journalEntry.title}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Date</span></dt>
-                <dd>
-                    <span>{{journalEntry.date | date:'longDate'}}</span>
-                </dd>
-                <dt><span>Title</span></dt>
-                <dd>
-                    <span>{{journalEntry.title}}</span>
-                </dd>
                 <dt><span>Description</span></dt>
                 <dd>
                     <span>{{journalEntry.description}}</span>
