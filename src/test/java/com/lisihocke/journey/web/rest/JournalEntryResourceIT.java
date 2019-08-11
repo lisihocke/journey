@@ -19,6 +19,8 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
@@ -156,6 +158,23 @@ public class JournalEntryResourceIT {
 
     @Test
     @Transactional
+    public void createJournalEntryWithoutMandatoryFields() throws Exception {
+        journalEntry.setDate(null);
+        journalEntry.setTitle(null);
+        journalEntry.setChallenge(null);
+        JournalEntryDTO journalEntryDTO = journalEntryMapper.toDto(journalEntry);
+
+        ResultMatcher badRequest = status().isBadRequest();
+        MockHttpServletRequestBuilder builder = post("/api/journal-entries")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(journalEntryDTO));
+
+        restJournalEntryMockMvc.perform(builder)
+            .andExpect(badRequest);
+    }
+
+    @Test
+    @Transactional
     public void createJournalEntryWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = journalEntryRepository.findAll().size();
 
@@ -247,7 +266,7 @@ public class JournalEntryResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].challengeId").value(hasItem(defaultChallenge.getId().intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getJournalEntry() throws Exception {
