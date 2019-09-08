@@ -4,8 +4,16 @@
 put Sass variables here:
 eg $input-color: red;
 ****************************/
+
+$primary: #1f7369;
+$secondary: #264653;
+$success: #1f7369;
+$info: #2a7d9e;
+$warning: #e9c46a;
+$danger: #a9513b;
+$dark: #264653;
+$light: #f8f9fa;
+
 // Override Boostrap variables
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
-
-/* jhipster-needle-scss-add-vendor JHipster will add new css style */

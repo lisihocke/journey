@@ -5,6 +5,8 @@
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
+$danger: #a9513b;
+$primary: #1f7369;
 
 body,
 h1,
@@ -15,13 +17,12 @@ h4 {
 }
 
 a {
-  color: #533f03;
-  font-weight: bold;
+  color: $primary;
+  font-weight: 400;
 }
 
 a:hover {
-  color: #533f03;
-  font-weight: bold;
+  color: $primary;
   /* make sure browsers use the pointer cursor for anchors, even with no href */
   cursor: pointer;
 }
@@ -47,11 +48,11 @@ Generic styles
 /* Error highlight on input fields */
 .ng-valid[required],
 .ng-valid.required {
-  border-left: 5px solid green;
+  border-left: 5px solid $primary;
 }
 
 .ng-invalid:not(form) {
-  border-left: 5px solid red;
+  border-left: 5px solid $danger;
 }
 
 /* other generic styles */
@@ -64,7 +65,7 @@ Generic styles
 
 .error {
   color: white;
-  background-color: red;
+  background-color: $danger;
 }
 
 .pad {
@@ -140,6 +141,12 @@ Custom alerts for notification
   }
 }
 
+.alert-warning .alert-link {
+  color: $primary;
+  font-weight: 300;
+  text-decoration-line: underline;
+}
+
 /* ==========================================================================
 entity detail page css
 ========================================================================== */
@@ -178,5 +185,3 @@ ui bootstrap tweaks
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-/* jhipster-needle-scss-add-main JHipster will add new css style */

@@ -3,8 +3,8 @@
         <span class="hipster img-fluid rounded"></span>
     </div>
     <div class="col-md-9">
-        <h1 class="display-4">Welcome, Java Hipster!</h1>
-        <p class="lead">This is your homepage</p>
+        <h1 class="display-4">Welcome on your Journey!</h1>
+        <p class="lead">Your learning journal application</p>
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
@@ -21,21 +21,19 @@
                 <a class="alert-link" routerLink="register">Register a new account</a>
             </div>
         </div>
-
         <p>
-            If you have any question on JHipster:
-        </p>
-
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
-        </ul>
-
-        <p>
-            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">GitHub</a>!
+            <span>Journey supports you in tackling your personal challenges! Just follow these five steps.</span>
+            <ol>
+                <li>Start by defining your personal <a routerLink="/challenge/new">challenge</a>. What is it you want to tackle? Provide a tag as short identifier and a description.</li>
+                <li>For this challenge, come up with a hypothesis how to tackle it and define a concrete probe to test it. Make sure to add exit criteria when to stop and reflect.</li>
+                <li>Now you're ready to go! With every step you make on your way towards your goal, create a <a routerLink="/journal-entry/new">journal entry</a> to document your lessons and visualize your learning progress.</li>
+                <li>While moving forward, keep an eye on your exit criteria.</li>
+                <li>Finally: when the defined exit criteria are met, evaluate your probe and see if it could prove your hypothesis.</li>
+            </ol>
+            <span>
+                <p>If you succeeded - hooray! You're ready to tackle your next challenge. :D</p>
+                <p>If you did not succeed yet, you at least learned what did not work in your specific context. Use that new knowledge to rinse and repeat and design a new hypothesis to tackle your challenge. All the best and keep going on your personal Journey!</p>
+            </span>
         </p>
     </div>
 </div>

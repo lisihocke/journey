@@ -3,22 +3,12 @@
   "short_name": "Journey",
   "icons": [
       {
-          "src": "./content/images/jhipster_family_member_0_head-192.png",
-          "sizes": "192x192",
+          "src": "./content/images/iconfinder_105-Map_2123982.png",
+          "sizes": "512x512",
           "type": "image/png"
       },
       {
-          "src": "./content/images/jhipster_family_member_0_head-256.png",
-          "sizes": "256x256",
-          "type": "image/png"
-      },
-      {
-          "src": "./content/images/jhipster_family_member_0_head-384.png",
-          "sizes": "384x384",
-          "type": "image/png"
-      },
-      {
-          "src": "./content/images/jhipster_family_member_0_head-512.png",
+          "src": "./content/images/iconfinder_105-Map_2123982_white.png",
           "sizes": "512x512",
           "type": "image/png"
       }

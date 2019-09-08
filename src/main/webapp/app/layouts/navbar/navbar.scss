@@ -7,7 +7,7 @@ Navbar
 
 .navbar-version {
   font-size: 0.65em;
-  color: $navbar-dark-color;
+  color: white;
 }
 
 .profile-image {
@@ -26,7 +26,20 @@ Navbar
 
   a.nav-link {
     font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
   }
+
+  a.nav-link:active {
+    color: white;
+  }
+
+  a.nav-link:hover {
+    color: white;
+  }
+}
+
+.navbar-dark .navbar-nav .active > .nav-link {
+  color: white;
 }
 
 /* ==========================================================================
@@ -37,6 +50,6 @@ Logo styles
   width: 45px;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
+  background: url('../../../content/images/iconfinder_105-Map_2123982_white.png') no-repeat center center;
   background-size: contain;
 }
