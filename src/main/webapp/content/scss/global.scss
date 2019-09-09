@@ -143,8 +143,19 @@ Custom alerts for notification
 
 .alert-warning .alert-link {
   color: $primary;
-  font-weight: 300;
-  text-decoration-line: underline;
+  font-weight: 400;
+}
+
+a:not([href]):not([tabindex]) {
+  color: $primary;
+  font-weight: 400;
+}
+
+a:not([href]):not([tabindex]):hover,
+a:not([href]):not([tabindex]):focus {
+  color: $primary;
+  font-weight: 400;
+  text-decoration: underline;
 }
 
 /* ==========================================================================

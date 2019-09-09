@@ -16,4 +16,17 @@
             <column name="date" type="date"></column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="20190622223305-1-data" author="jhipster" context="faker">
+        <loadUpdateData
+            file="config/liquibase/data/journal_entry_with_date.csv"
+            separator=";"
+            tableName="journal_entry"
+            primaryKey="id">
+            <column name="id" type="numeric"/>
+            <column name="date" type="date"/>
+            <column name="title" type="string"/>
+            <column name="description" type="string"/>
+        </loadUpdateData>
+    </changeSet>
 </databaseChangeLog>
