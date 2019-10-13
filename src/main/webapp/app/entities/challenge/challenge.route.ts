@@ -37,7 +37,7 @@ export const challengeRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
       pageTitle: 'Challenges'
     },
     canActivate: [UserRouteAccessService]

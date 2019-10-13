@@ -38,7 +38,7 @@ export const journalEntryRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
-      defaultSort: 'id,asc',
+      defaultSort: 'date,desc',
       pageTitle: 'JournalEntries'
     },
     canActivate: [UserRouteAccessService]
