@@ -1,5 +1,8 @@
 package com.lisihocke.journey.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,6 +26,9 @@ import java.util.Set;
 @Entity
 @Table(name = "challenge")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Getter
+@Setter
+@ToString
 public class Challenge implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,29 +78,9 @@ public class Challenge implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<JournalEntry> journalEntries = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
     public Challenge tag(String tag) {
         this.tag = tag;
         return this;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getChallengeDescription() {
-        return challengeDescription;
     }
 
     public Challenge challengeDescription(String challengeDescription) {
@@ -102,25 +88,9 @@ public class Challenge implements Serializable {
         return this;
     }
 
-    public void setChallengeDescription(String challengeDescription) {
-        this.challengeDescription = challengeDescription;
-    }
-
-    public String getHypothesis() {
-        return hypothesis;
-    }
-
     public Challenge hypothesis(String hypothesis) {
         this.hypothesis = hypothesis;
         return this;
-    }
-
-    public void setHypothesis(String hypothesis) {
-        this.hypothesis = hypothesis;
-    }
-
-    public String getProbe() {
-        return probe;
     }
 
     public Challenge probe(String probe) {
@@ -128,25 +98,9 @@ public class Challenge implements Serializable {
         return this;
     }
 
-    public void setProbe(String probe) {
-        this.probe = probe;
-    }
-
-    public String getPauseCriteria() {
-        return pauseCriteria;
-    }
-
     public Challenge pauseCriteria(String pauseCriteria) {
         this.pauseCriteria = pauseCriteria;
         return this;
-    }
-
-    public void setPauseCriteria(String pauseCriteria) {
-        this.pauseCriteria = pauseCriteria;
-    }
-
-    public String getExitCriteria() {
-        return exitCriteria;
     }
 
     public Challenge exitCriteria(String exitCriteria) {
@@ -154,38 +108,14 @@ public class Challenge implements Serializable {
         return this;
     }
 
-    public void setExitCriteria(String exitCriteria) {
-        this.exitCriteria = exitCriteria;
-    }
-
-    public String getInfluences() {
-        return influences;
-    }
-
     public Challenge influences(String influences) {
         this.influences = influences;
         return this;
     }
 
-    public void setInfluences(String influences) {
-        this.influences = influences;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
     public Challenge notes(String notes) {
         this.notes = notes;
         return this;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Set<JournalEntry> getJournalEntries() {
-        return journalEntries;
     }
 
     public Challenge journalEntries(Set<JournalEntry> journalEntries) {
@@ -205,10 +135,6 @@ public class Challenge implements Serializable {
         return this;
     }
 
-    public void setJournalEntries(Set<JournalEntry> journalEntries) {
-        this.journalEntries = journalEntries;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -223,20 +149,5 @@ public class Challenge implements Serializable {
     @Override
     public int hashCode() {
         return 31;
-    }
-
-    @Override
-    public String toString() {
-        return "Challenge{" +
-            "id=" + getId() +
-            ", tag='" + getTag() + "'" +
-            ", challengeDescription='" + getChallengeDescription() + "'" +
-            ", hypothesis='" + getHypothesis() + "'" +
-            ", probe='" + getProbe() + "'" +
-            ", pauseCriteria='" + getPauseCriteria() + "'" +
-            ", exitCriteria='" + getExitCriteria() + "'" +
-            ", influences='" + getInfluences() + "'" +
-            ", notes='" + getNotes() + "'" +
-            "}";
     }
 }
