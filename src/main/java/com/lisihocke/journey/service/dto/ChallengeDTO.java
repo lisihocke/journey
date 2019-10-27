@@ -1,5 +1,9 @@
 package com.lisihocke.journey.service.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -8,6 +12,9 @@ import java.util.Objects;
 /**
  * A DTO for the {@link com.lisihocke.journey.domain.Challenge} entity.
  */
+@Getter
+@Setter
+@ToString
 public class ChallengeDTO implements Serializable {
 
     private Long id;
@@ -41,78 +48,6 @@ public class ChallengeDTO implements Serializable {
     @Size(max = 8000)
     private String notes;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getChallengeDescription() {
-        return challengeDescription;
-    }
-
-    public void setChallengeDescription(String challengeDescription) {
-        this.challengeDescription = challengeDescription;
-    }
-
-    public String getHypothesis() {
-        return hypothesis;
-    }
-
-    public void setHypothesis(String hypothesis) {
-        this.hypothesis = hypothesis;
-    }
-
-    public String getProbe() {
-        return probe;
-    }
-
-    public void setProbe(String probe) {
-        this.probe = probe;
-    }
-
-    public String getPauseCriteria() {
-        return pauseCriteria;
-    }
-
-    public void setPauseCriteria(String pauseCriteria) {
-        this.pauseCriteria = pauseCriteria;
-    }
-
-    public String getExitCriteria() {
-        return exitCriteria;
-    }
-
-    public void setExitCriteria(String exitCriteria) {
-        this.exitCriteria = exitCriteria;
-    }
-
-    public String getInfluences() {
-        return influences;
-    }
-
-    public void setInfluences(String influences) {
-        this.influences = influences;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -132,20 +67,5 @@ public class ChallengeDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "ChallengeDTO{" +
-            "id=" + getId() +
-            ", tag='" + getTag() + "'" +
-            ", challengeDescription='" + getChallengeDescription() + "'" +
-            ", hypothesis='" + getHypothesis() + "'" +
-            ", probe='" + getProbe() + "'" +
-            ", pauseCriteria='" + getPauseCriteria() + "'" +
-            ", exitCriteria='" + getExitCriteria() + "'" +
-            ", influences='" + getInfluences() + "'" +
-            ", notes='" + getNotes() + "'" +
-            "}";
     }
 }

@@ -12,7 +12,6 @@ import com.lisihocke.journey.service.util.RandomUtil;
 import com.lisihocke.journey.web.rest.errors.EmailAlreadyUsedException;
 import com.lisihocke.journey.web.rest.errors.InvalidPasswordException;
 import com.lisihocke.journey.web.rest.errors.LoginAlreadyUsedException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -25,7 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -80,7 +83,7 @@ public class UserService {
 
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmailIgnoreCase(mail)
-            .filter(User::getActivated)
+            .filter(User::isActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(Instant.now());
@@ -126,7 +129,7 @@ public class UserService {
     }
 
     private boolean removeNonActivatedUser(User existingUser){
-        if (existingUser.getActivated()) {
+        if (existingUser.isActivated()) {
              return false;
         }
         userRepository.delete(existingUser);

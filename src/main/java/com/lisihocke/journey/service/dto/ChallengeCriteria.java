@@ -4,6 +4,8 @@ import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,6 +19,8 @@ import java.util.Objects;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
+@Getter
+@Setter
 public class ChallengeCriteria implements Serializable, Criteria {
 
     private static final long serialVersionUID = 1L;
@@ -39,30 +43,6 @@ public class ChallengeCriteria implements Serializable, Criteria {
     @Override
     public ChallengeCriteria copy() {
         return new ChallengeCriteria(this);
-    }
-
-    public LongFilter getId() {
-        return id;
-    }
-
-    public void setId(LongFilter id) {
-        this.id = id;
-    }
-
-    public StringFilter getTag() {
-        return tag;
-    }
-
-    public void setTag(StringFilter tag) {
-        this.tag = tag;
-    }
-
-    public LongFilter getJournalEntryId() {
-        return journalEntryId;
-    }
-
-    public void setJournalEntryId(LongFilter journalEntryId) {
-        this.journalEntryId = journalEntryId;
     }
 
     @Override
@@ -97,5 +77,4 @@ public class ChallengeCriteria implements Serializable, Criteria {
             (journalEntryId != null ? "journalEntryId=" + journalEntryId + ", " : "") +
             "}";
     }
-
 }

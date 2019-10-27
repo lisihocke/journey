@@ -1,6 +1,9 @@
 package com.lisihocke.journey.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,6 +26,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "journal_entry")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Getter
+@Setter
+@ToString
 public class JournalEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,29 +55,9 @@ public class JournalEntry implements Serializable {
     @JsonIgnoreProperties("journalEntries")
     private Challenge challenge;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
     public JournalEntry date(LocalDate date) {
         this.date = date;
         return this;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public JournalEntry title(String title) {
@@ -79,29 +65,9 @@ public class JournalEntry implements Serializable {
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public JournalEntry description(String description) {
         this.description = description;
         return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Challenge getChallenge() {
-        return challenge;
-    }
-
-    public void setChallenge(Challenge challenge) {
-        this.challenge = challenge;
     }
 
     @Override
@@ -118,16 +84,5 @@ public class JournalEntry implements Serializable {
     @Override
     public int hashCode() {
         return 31;
-    }
-
-    @Override
-    public String toString() {
-        return "JournalEntry{" +
-            "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", challenge='" + getChallenge() + "'" +
-            "}";
     }
 }

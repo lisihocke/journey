@@ -5,6 +5,8 @@ import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.LocalDateFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,6 +20,8 @@ import java.util.Objects;
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
+@Getter
+@Setter
 public class JournalEntryCriteria implements Serializable, Criteria {
 
     private static final long serialVersionUID = 1L;
@@ -46,46 +50,6 @@ public class JournalEntryCriteria implements Serializable, Criteria {
     @Override
     public JournalEntryCriteria copy() {
         return new JournalEntryCriteria(this);
-    }
-
-    public LongFilter getId() {
-        return id;
-    }
-
-    public void setId(LongFilter id) {
-        this.id = id;
-    }
-
-    public LocalDateFilter getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateFilter date) {
-        this.date = date;
-    }
-
-    public StringFilter getTitle() {
-        return title;
-    }
-
-    public void setTitle(StringFilter title) {
-        this.title = title;
-    }
-
-    public StringFilter getDescription() {
-        return description;
-    }
-
-    public void setDescription(StringFilter description) {
-        this.description = description;
-    }
-
-    public LongFilter getChallengeId() {
-        return challengeId;
-    }
-
-    public void setChallengeId(LongFilter challengeId) {
-        this.challengeId = challengeId;
     }
 
     @Override
@@ -126,5 +90,4 @@ public class JournalEntryCriteria implements Serializable, Criteria {
             (challengeId != null ? "challengeId=" + challengeId + ", " : "") +
             "}";
     }
-
 }

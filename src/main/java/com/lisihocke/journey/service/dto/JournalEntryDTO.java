@@ -1,5 +1,9 @@
 package com.lisihocke.journey.service.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -9,6 +13,9 @@ import java.util.Objects;
 /**
  * A DTO for the {@link com.lisihocke.journey.domain.JournalEntry} entity.
  */
+@Getter
+@Setter
+@ToString
 public class JournalEntryDTO implements Serializable {
 
     private Long id;
@@ -25,47 +32,6 @@ public class JournalEntryDTO implements Serializable {
 
     @NotNull
     private Long challengeId;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getChallengeId() {
-        return challengeId;
-    }
-
-    public void setChallengeId(Long challengeId) {
-        this.challengeId = challengeId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -86,16 +52,5 @@ public class JournalEntryDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "JournalEntryDTO{" +
-            "id=" + getId() +
-            ", date='" + getDate() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", challengeId='" + getChallengeId() + "'" +
-            "}";
     }
 }
