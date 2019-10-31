@@ -102,7 +102,7 @@ export class JournalEntryUpdateComponent implements OnInit {
     this.jhiAlertService.error(errorMessage, null, null);
   }
 
-  trackChallengeById(index: number, item: IChallenge) {
-    return item.id;
+  trackChallengeByTag(index: number, item: IChallenge) {
+    return item.tag;
   }
 }

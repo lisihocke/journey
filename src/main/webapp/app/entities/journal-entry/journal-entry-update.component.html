@@ -50,7 +50,7 @@
                     <select type="text" class="form-control" name="challenge" id="field_challenge"
                            formControlName="challengeId">
                         <option *ngIf="!editForm.get('challengeId').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="challengeOption.id" *ngFor="let challengeOption of challenges; trackBy: trackChallengeById">{{challengeOption.id}}</option>
+                        <option [ngValue]="challengeOption.id" *ngFor="let challengeOption of challenges; trackBy: trackChallengeByTag">{{challengeOption.tag}}</option>
                     </select>
                     <div *ngIf="editForm.get('challengeId').invalid && (editForm.get('challengeId').dirty || editForm.get('challengeId').touched)">
                         <small class="form-text text-danger"
